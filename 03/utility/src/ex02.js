@@ -1,6 +1,5 @@
 import * as THREE from "three";
-
-// ----- 주제: AxesHelper, GridHelper
+import Stats from "stats.js";
 
 export default function example() {
   // Renderer
@@ -22,9 +21,8 @@ export default function example() {
     0.1,
     1000
   );
-  camera.position.x = 1;
-  camera.position.y = 3;
-  camera.position.z = 0;
+  camera.position.y = 1;
+  camera.position.z = 5;
 
   scene.add(camera);
 
@@ -37,24 +35,17 @@ export default function example() {
   directionalLight.position.z = 2;
   scene.add(directionalLight);
 
-  // AxesHelper
-  const axesHelper = new THREE.AxesHelper(3);
-  scene.add(axesHelper);
-
-  // GridHelper
-  const gridHelper = new THREE.GridHelper(5);
-  scene.add(gridHelper);
-
   // Mesh
   const geometry = new THREE.BoxGeometry(1, 1, 1);
   const material = new THREE.MeshStandardMaterial({
     color: "seagreen",
   });
   const mesh = new THREE.Mesh(geometry, material);
-  mesh.position.x = 2;
-  mesh.position.y = 1;
   scene.add(mesh);
-  camera.lookAt(mesh.position);
+
+  // Stats
+  const stats = new Stats();
+  document.body.appendChild(stats.domElement);
 
   // 그리기
   const clock = new THREE.Clock();
@@ -62,6 +53,8 @@ export default function example() {
   function draw() {
     const time = clock.getElapsedTime();
 
+    // 프레임을 보기위해 여기서 stats를 업데이트 해줌
+    stats.update();
     mesh.rotation.y = time;
 
     renderer.render(scene, camera);
