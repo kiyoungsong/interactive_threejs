@@ -1,6 +1,7 @@
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-// ----- 주제: OrbitControls
+// ----- 주제: Material
 
 export default function example() {
   // Renderer
@@ -26,20 +27,13 @@ export default function example() {
   camera.position.z = 4;
   scene.add(camera);
 
-  // Light
-  const ambientLight = new THREE.AmbientLight("white", 0.5);
-  scene.add(ambientLight);
-
-  const directionalLight = new THREE.DirectionalLight("white", 1);
-  directionalLight.position.x = 1;
-  directionalLight.position.z = 2;
-  scene.add(directionalLight);
-
   // Controls
+  const controls = new OrbitControls(camera, renderer.domElement);
 
   // Mesh
   const geometry = new THREE.BoxGeometry(1, 1, 1);
-  const material = new THREE.MeshStandardMaterial({
+  // Basic는 입체감이 없는 Material으로 빛이나 조명에 영향을 안받음 때문에 성능이 가장 좋음
+  const material = new THREE.MeshBasicMaterial({
     color: "seagreen",
   });
   const mesh = new THREE.Mesh(geometry, material);
