@@ -44,12 +44,19 @@ export default function example() {
   scene.add(mesh);
 
   // 그리기
+  const clock = new THREE.Clock();
+
   function draw() {
+    const time = clock.getElapsedTime();
     // 각도는 Radian을 사용함
     // 360도는 2파이
     // mesh.rotation.y += 0.01;
     // 아래는 1도씩 돌림
-    mesh.rotation.y += THREE.MathUtils.degToRad(1);
+    // mesh.rotation.y += THREE.MathUtils.degToRad(1);
+
+    // 방법 1
+    // 시간을 넣어줌으로써 디바이스에 종속되지 않고 성능을 보정해주는 역할을 함
+    mesh.rotation.y = time;
     mesh.position.y += 0.01;
     if (mesh.position.y > 3) {
       mesh.position.y = 0;
